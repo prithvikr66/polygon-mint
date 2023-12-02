@@ -12,17 +12,20 @@ function App() {
       const contract=new ethers.Contract(contractAddress,abi,signer);
       const totalSupplyInHex=await contract.totalSupply();
       const totalSupply=parseInt(totalSupplyInHex,16)
+      
       const userTokenIds=[]
-      // const getOwner=async(tokenId)=>{
-      //   const newTokenId= ethers.utils.parseUnits(toString(tokenId),0)
-      //   const owner=await contract.ownerOf(tokenId);
-      //   return owner
-      // }
-      // for(let i=0;i<totalSupply;i++){
-      //   if(getOwner(i)===walletAddress)
-      //     userTokenIds.push(i)
-      // }
-      // console.log(userTokenIds)
+      
+      const getOwner=async(tokenId)=>{
+        const owner=await contract.ownerOf(tokenId);
+        if(owner==="0x59FE0Feab6Dae194916769290b20fF57fe22FABF")
+        return tokenId;
+      }
+      for (let i=1;i<=totalSupply;i++){
+        const token=getOwner(i)
+        userTokenIds.push(token)
+      }
+     
+      
         
     }
     read()
